@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
         std::cout << "\nThe parser created this prerequisite map:" << std::endl;
         for (auto &[key, value]: requisiteMap) {
             std::cout << key << ": ";
-            for (int i = 0; i < value.size(); i++) {
+            for (long unsigned int i = 0; i < value.size(); i++) {
                 std::cout << value.at(i);
                 if (i != value.size() - 1)
                     std::cout << ", ";
