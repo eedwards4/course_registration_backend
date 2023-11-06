@@ -9,6 +9,7 @@
 #include<map>
 #include<vector>
 #include<stack>
+#include<iostream>
 
 #include "CourseNode.h"
 

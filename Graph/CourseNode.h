@@ -11,7 +11,7 @@
 
 class CourseNode {
 public:
-    explicit CourseNode(std::string);
+    explicit CourseNode(std::string id) : _courseID(std::move(id)) {};
     std::vector<CourseNode *> prereqNodes() {return _prereqNodes;}
     void addPrereqNode(CourseNode *);
     int numPrereqs() {return _prereqNodes.size();}

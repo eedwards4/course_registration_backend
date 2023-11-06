@@ -30,10 +30,14 @@ int main(int argc, char *argv[]) {
     Parser parser(argv[argc - 1]);
     std::map<std::string, std::vector<std::string>> requisiteMap = parser.parseJSONObject();
 
+    // Create Graph object for the JSON file and build the graph
+    Graph graph;
+    graph.buildGraph(requisiteMap);
+
     // Run the given command
     std::string command = argv[1];
     if (command == "-cyclic"){
-
+        graph.printGraph();
     }
     else if (command == "-print"){
 
