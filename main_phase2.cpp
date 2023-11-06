@@ -36,11 +36,16 @@ int main(int argc, char *argv[]) {
 
     // Run the given command
     std::string command = argv[1];
-    if (command == "-cyclic"){
+    if (command == "-test"){
         graph.printGraph();
     }
-    else if (command == "-print"){
 
+    if (command == "-cyclic"){
+        std::cout << "The graph induced by " << argv[argc - 1];
+        if (!graph.isCyclic()){
+            std::cout << " does not";
+        }
+        std::cout << " contains a cycle." << std::endl;
     }
     else if (command == "-includes"){ // Determines whether the map includes a course
         for (auto&[key, value] : requisiteMap){
@@ -64,7 +69,7 @@ int main(int argc, char *argv[]) {
 
     }
     else if (command == "-print"){
-
+        graph.printGraph();
     }
     else if (command == "-longest"){
 

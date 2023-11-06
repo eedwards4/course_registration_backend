@@ -32,6 +32,10 @@ private:
     std::map<std::string, CourseNode *> graphMap;
     // You will have to define private helper functions for a few of the functions that traverse the
     // graph recursively.
+
+    int getNodeLocation(std::string label);
+    std::vector<bool, std::vector<std::string>> pathFromToo(std::vector<bool, std::vector<std::string>> visited, int loc, int tgt);
+
 };
 
 
