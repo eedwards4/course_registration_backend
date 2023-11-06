@@ -35,25 +35,24 @@ void Graph::printGraph() {
     }
 }
 
-int Graph::getNodeLocation(std::string label){
-    for (int loc = 0; loc < graphMap.size(); loc++){
-        if (graphMap[loc]->courseID() == label){
-            return loc;
+bool Graph::pathFromToHelper(std::string fromNodeLabel, std::string toNodeLabel, std::vector<std::string> &path) {
+    if (graphMap[fromNodeLabel]->prereqNodes().empty()){
+        return false;
+    }
+    if (fromNodeLabel == toNodeLabel){
+        path.push_back(graphMap[fromNodeLabel]->courseID());
+        return true;
+    }
+    for (auto & i : graphMap[fromNodeLabel]->prereqNodes()){
+        if (pathFromToHelper(i->courseID(), toNodeLabel, path)){
+            path.push_back(graphMap[fromNodeLabel]->courseID());
+            return true;
         }
     }
-    return -1;
 }
 
-
-
 std::vector<std::string> Graph::pathFromTo(std::string fromNodeLabel, std::string toNodeLabel) {
-    int start = getNodeLocation(fromNodeLabel);
-    int end = getNodeLocation(toNodeLabel);
     std::vector<std::string> path;
-
-    if (start > end){ // If start is after end, return a blank vector
-        return path;
-    }
 
 }
 
@@ -84,3 +83,4 @@ int Graph::longestChain(std::string courseID) {
 bool Graph::isALabel(std::string courseID) {
     return graphMap.find(courseID) != graphMap.end();
 }
+
