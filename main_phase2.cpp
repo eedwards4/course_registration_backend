@@ -13,16 +13,11 @@ void verifyReadableInputFile(char* jsonFileName);
 
 int main(int argc, char *argv[]) {
     // Make sure that the executable was given exactly 2 command-line argument
-    /*
-    if (argc != 3) {
+
+    if (argc > 5) {
         std::cerr << errorMessages[E_WRONG_NUMBER_ARGS] << std::endl;
         exit(E_WRONG_NUMBER_ARGS);
     }
-     */
-
-    //for (int i = 0; i < argc; i++){
-    //    std::cout << i << " " << argv[i] << "\n";
-    //}
 
     verifyReadableInputFile(argv[argc - 1]);
 
@@ -36,10 +31,6 @@ int main(int argc, char *argv[]) {
 
     // Run the given command
     std::string command = argv[1];
-    if (command == "-test"){
-        graph.printGraph();
-    }
-
     if (command == "-cyclic"){
         std::cout << "The graph induced by " << argv[argc - 1];
         if (!graph.isCyclic()){
@@ -47,12 +38,13 @@ int main(int argc, char *argv[]) {
         }
         std::cout << " contains a cycle." << std::endl;
     }
+    else if (command == "-print"){
+        graph.printGraph();
+    }
     else if (command == "-includes"){ // Determines whether the map includes a course
-        for (auto&[key, value] : requisiteMap){
-            if (key == argv[2]){
-                std::cout << argv[argc - 1] << " includes " << argv[2] << "." << std::endl;
-                return 0;
-            }
+        if (graph.isALabel(argv[2])){
+            std::cout << argv[argc - 1] << " includes " << argv[2] << "." << std::endl;
+            return 0;
         }
         std::cout << argv[argc - 1] << " does not include " << argv[2] << "." << std::endl;
     }
@@ -76,13 +68,11 @@ int main(int argc, char *argv[]) {
         }
     }
     else if (command == "-length"){
-
-    }
-    else if (command == "-print"){
-        graph.printGraph();
+        std::cout << "The length of the longest prerequisite chain of " << argv[2]
+                  << " is " << graph.longestChain(argv[2]) << "." << std::endl;
     }
     else if (command == "-longest"){
-
+        std::cout << "The length of the longest chain in " << argv[argc - 1] << " is " << graph.longestChain() << "." << std::endl;
     }
     else if (command == "-indegree"){
         int counter = graph.degreeOfDependency(argv[2]);

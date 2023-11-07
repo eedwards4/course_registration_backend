@@ -111,11 +111,29 @@ int Graph::degreeOfDependency(std::string courseID) {
 }
 
 int Graph::longestChain() { // TODO
-    // HELL HELL HELL HELL
+    int longest = 0;
+    for (auto&[key, value] : graphMap){
+        std::vector<std::vector<std::string>> prereqs;
+        prerequisiteChainsFor(key, prereqs);
+        for (auto & i : prereqs){
+            if (i.size() > longest){
+                longest = i.size();
+            }
+        }
+    }
+    return longest;
 }
 
-int Graph::longestChain(std::string courseID) { // TODO
-    // HELL HELL HELL HELL
+int Graph::longestChain(std::string courseID) {
+    std::vector<std::vector<std::string>> prereqs;
+    prerequisiteChainsFor(courseID, prereqs);
+    int longest = 0;
+    for (auto & i : prereqs){
+        if (i.size() > longest){
+            longest = static_cast<int>(i.size());
+        }
+    }
+    return longest;
 }
 
 bool Graph::isALabel(std::string courseID) {
