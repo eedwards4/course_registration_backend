@@ -63,7 +63,17 @@ int main(int argc, char *argv[]) {
 
     }
     else if (command == "-chains"){
-
+        std::vector<std::vector<std::string>> prereqs;
+        graph.prerequisiteChainsFor(argv[2], prereqs);
+        for (std::vector<std::string>& i : prereqs){
+            int iter = 0;
+            for (std::string& j : i){
+                std::cout << j;
+                if (iter != i.size() - 1){std::cout << ", ";} // If not last element, print comma
+                iter++;
+            }
+            std::cout << std::endl;
+        }
     }
     else if (command == "-length"){
 
@@ -75,7 +85,9 @@ int main(int argc, char *argv[]) {
 
     }
     else if (command == "-indegree"){
-
+        int counter = graph.degreeOfDependency(argv[2]);
+        std::cout << "The number of courses that directly require" << argv[2]
+                  << " as a prerequisite is " << counter << "." << std::endl;
     }
     else {
         std::cout << "Command not recognized!";

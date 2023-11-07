@@ -34,6 +34,7 @@ private:
     // graph recursively.
 
     bool pathFromToHelper(std::string fromNodeLabel, std::string toNodeLabel, std::vector<std::string> &path);
+    void prereqChainsHelper(std::string courseID, std::vector<std::vector<std::string>>& chains);
 
 };
 
