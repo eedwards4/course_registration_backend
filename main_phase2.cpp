@@ -67,8 +67,8 @@ int main(int argc, char *argv[]) {
         graph.prerequisiteChainsFor(argv[2], prereqs);
         for (std::vector<std::string>& i : prereqs){
             int iter = 0;
-            for (std::string& j : i){
-                std::cout << j;
+            for (int j = static_cast<int>(i.size()) - 1; j > -1; j--){ // Iterate in reverse to get the correct order
+                std::cout << i[j];
                 if (iter != i.size() - 1){std::cout << ", ";} // If not last element, print comma
                 iter++;
             }

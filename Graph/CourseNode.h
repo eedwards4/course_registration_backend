@@ -20,6 +20,7 @@ public:
     bool &visited() {return _visited;}
     bool &onPath() {return _onPath;}
     bool hasPrereq() {return _prereqNodes.size() > 0;}
+    bool hasPrereqSpecific(std::string prereqID);
 
 private:
     std::vector<CourseNode *> _prereqNodes;

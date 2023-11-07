@@ -5,6 +5,7 @@
 #include "Graph.h"
 
 #include <utility>
+#include <chrono>
 
 Graph::Graph() = default;
 
@@ -62,34 +63,39 @@ std::vector<std::string> Graph::pathFromTo(std::string fromNodeLabel, std::strin
     return path;
 }
 
-bool Graph::canBeTakenConcurrently(std::string node1Label, std::string node2Label) {
+bool Graph::canBeTakenConcurrently(std::string node1Label, std::string node2Label) { // TODO
     // NIGHTMARE NIGHTMARE NIGHTMARE
+    return false;
 }
 
-void Graph::prereqChainsHelper(std::string courseID, std::vector<std::vector<std::string>> &chains){
+void Graph::prereqGetter(std::string init, std::string courseID, std::vector<std::pair<bool, std::vector<std::string>>>& chains){
     if (graphMap[courseID]->prereqNodes().empty()){
-        std::vector<std::string> chain;
-        chain.push_back(courseID);
-        chains.push_back(chain);
+        chains.emplace_back(true, std::vector<std::string>{courseID});
         return;
     }
+    // Get the prerequisite chains of the current course
+    std::vector<std::pair<bool, std::vector<std::string>>> myChains;
     for (auto & i : graphMap[courseID]->prereqNodes()){
-        prereqChainsHelper(i->courseID(), chains);
-        for (auto & j : chains){
-            if (std::find(j.begin(), j.end(), courseID) == j.end()) {
-
-                j.push_back(courseID);
-            }
-        }
+        prereqGetter(init, i->courseID(), myChains);
     }
+    //Add the current course to the end of each chain
+    for (auto & i : myChains){
+        i.second.push_back(courseID);
+    }
+    // Add the chains to the chains vector
+    chains.insert(chains.end(), myChains.begin(), myChains.end());
 }
 
 void Graph::prerequisiteChainsFor(std::string courseID, std::vector<std::vector<std::string>> &prerequisiteChains) {
-    prereqChainsHelper(std::move(courseID), prerequisiteChains);
+    std::vector<std::pair<bool, std::vector<std::string>>> chains;
+    prereqGetter(courseID, courseID, chains);
+    for (auto & i : chains){
+        prerequisiteChains.push_back(i.second);
+    }
 }
 
-bool Graph::isCyclic() {
-    return false;
+bool Graph::isCyclic() { // TODO
+
 }
 
 int Graph::degreeOfDependency(std::string courseID) {
@@ -104,11 +110,11 @@ int Graph::degreeOfDependency(std::string courseID) {
     return counter;
 }
 
-int Graph::longestChain() {
+int Graph::longestChain() { // TODO
     // HELL HELL HELL HELL
 }
 
-int Graph::longestChain(std::string courseID) {
+int Graph::longestChain(std::string courseID) { // TODO
     // HELL HELL HELL HELL
 }
 
