@@ -31,6 +31,12 @@ int main(int argc, char *argv[]) {
 
     // Run the given command
     std::string command = argv[1];
+
+    if (command == "-test"){
+        std::cout << graph.pathFromTo("CS 242", "CS 115").empty();
+        return 0;
+    }
+
     if (command == "-cyclic"){
         std::cout << "The graph induced by " << argv[argc - 1];
         if (!graph.isCyclic()){

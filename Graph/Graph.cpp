@@ -59,17 +59,24 @@ bool Graph::pathFromToHelper(std::string fromNodeLabel, std::string toNodeLabel,
 
 std::vector<std::string> Graph::pathFromTo(std::string fromNodeLabel, std::string toNodeLabel) {
     std::vector<std::string> path;
-    pathFromToHelper(std::move(fromNodeLabel), std::move(toNodeLabel), path);
+    pathFromToHelper(fromNodeLabel, toNodeLabel, path);
     // Cleanup
     for (auto&[key, value] : graphMap){
         value->onPath() = false;
+    }
+    if (path.empty()){ // If no path was found, attempt finding a path with the nodes reversed
+        pathFromToHelper(toNodeLabel, fromNodeLabel, path);
+        // Cleanup (again)
+        for (auto&[key, value] : graphMap){
+            value->onPath() = false;
+        }
     }
     return path;
 }
 
 bool Graph::canBeTakenConcurrently(std::string node1Label, std::string node2Label) { // TODO
     std::vector<std::string> path;
-    pathFromToHelper(node1Label, node2Label, path);
+    path = pathFromTo(node1Label, node2Label);
     if (path.empty()){
         return true;
     }
