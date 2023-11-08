@@ -94,8 +94,24 @@ void Graph::prerequisiteChainsFor(std::string courseID, std::vector<std::vector<
     }
 }
 
-bool Graph::isCyclic() { // TODO
+void Graph::getTopLevelElements(std::vector<CourseNode *> &topLevelElements) {
+    for (auto&[key, value] : graphMap){
+        if (degreeOfDependency(key) == 0){
+            topLevelElements.push_back(graphMap[key]);
+        }
+    }
+}
 
+bool Graph::isCyclic() {
+    std::vector<CourseNode *> topLevel;
+    getTopLevelElements(topLevel);
+
+    for (auto & i : topLevel){
+        std::vector<std::string> path;
+        if (pathFromToHelper(i->courseID(), i->courseID(), path)){
+            return true;
+        }
+    }
 }
 
 int Graph::degreeOfDependency(std::string courseID) {

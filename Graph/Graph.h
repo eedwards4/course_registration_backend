@@ -35,6 +35,7 @@ private:
 
     bool pathFromToHelper(std::string fromNodeLabel, std::string toNodeLabel, std::vector<std::string> &path);
     void prereqGetter(std::string init, std::string courseID, std::vector<std::pair<bool, std::vector<std::string>>>& chains);
+    void getTopLevelElements(std::vector<CourseNode *>& topLevelElements);
 
 };
 
