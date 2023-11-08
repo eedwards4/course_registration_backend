@@ -60,11 +60,19 @@ bool Graph::pathFromToHelper(std::string fromNodeLabel, std::string toNodeLabel,
 std::vector<std::string> Graph::pathFromTo(std::string fromNodeLabel, std::string toNodeLabel) {
     std::vector<std::string> path;
     pathFromToHelper(std::move(fromNodeLabel), std::move(toNodeLabel), path);
+    // Cleanup
+    for (auto&[key, value] : graphMap){
+        value->onPath() = false;
+    }
     return path;
 }
 
 bool Graph::canBeTakenConcurrently(std::string node1Label, std::string node2Label) { // TODO
-    // NIGHTMARE NIGHTMARE NIGHTMARE
+    std::vector<std::string> path;
+    pathFromToHelper(node1Label, node2Label, path);
+    if (path.empty()){
+        return true;
+    }
     return false;
 }
 
@@ -94,24 +102,28 @@ void Graph::prerequisiteChainsFor(std::string courseID, std::vector<std::vector<
     }
 }
 
-void Graph::getTopLevelElements(std::vector<CourseNode *> &topLevelElements) {
-    for (auto&[key, value] : graphMap){
-        if (degreeOfDependency(key) == 0){
-            topLevelElements.push_back(graphMap[key]);
-        }
+bool Graph::isCyclicHelper(std::string courseID) {
+    if (graphMap[courseID]->onPath()){
+        return true;
     }
-}
-
-bool Graph::isCyclic() {
-    std::vector<CourseNode *> topLevel;
-    getTopLevelElements(topLevel);
-
-    for (auto & i : topLevel){
-        std::vector<std::string> path;
-        if (pathFromToHelper(i->courseID(), i->courseID(), path)){
+    graphMap[courseID]->onPath() = true;
+    for (auto & i : graphMap[courseID]->prereqNodes()){
+        if (isCyclicHelper(i->courseID())){
+            graphMap[courseID]->onPath() = false;
             return true;
         }
     }
+    graphMap[courseID]->onPath() = false;
+    return false;
+}
+
+bool Graph::isCyclic() {
+    for (auto&[key, value] : graphMap){
+        if (isCyclicHelper(key)){
+            return true;
+        }
+    }
+    return false;
 }
 
 int Graph::degreeOfDependency(std::string courseID) {
@@ -126,7 +138,7 @@ int Graph::degreeOfDependency(std::string courseID) {
     return counter;
 }
 
-int Graph::longestChain() { // TODO
+int Graph::longestChain() {
     int longest = 0;
     for (auto&[key, value] : graphMap){
         std::vector<std::vector<std::string>> prereqs;

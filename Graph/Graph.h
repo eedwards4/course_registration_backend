@@ -33,6 +33,7 @@ private:
     // You will have to define private helper functions for a few of the functions that traverse the
     // graph recursively.
 
+    bool isCyclicHelper(std::string courseID);
     bool pathFromToHelper(std::string fromNodeLabel, std::string toNodeLabel, std::vector<std::string> &path);
     void prereqGetter(std::string init, std::string courseID, std::vector<std::pair<bool, std::vector<std::string>>>& chains);
     void getTopLevelElements(std::vector<CourseNode *>& topLevelElements);

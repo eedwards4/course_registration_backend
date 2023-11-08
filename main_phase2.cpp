@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     else if (command == "-print"){
         graph.printGraph();
     }
-    else if (command == "-includes"){ // Determines whether the map includes a course
+    else if (command == "-includes"){
         if (graph.isALabel(argv[2])){
             std::cout << argv[argc - 1] << " includes " << argv[2] << "." << std::endl;
             return 0;
@@ -49,10 +49,23 @@ int main(int argc, char *argv[]) {
         std::cout << argv[argc - 1] << " does not include " << argv[2] << "." << std::endl;
     }
     else if (command == "-together"){
-
+        if (graph.canBeTakenConcurrently(argv[2], argv[3])){
+            std::cout << argv[2] << " and " << argv[3] << " can be taken concurrently." << std::endl;
+            return 0;
+        }
+        std::cout << argv[2] << " and " << argv[3] << " cannot be taken concurrently." << std::endl;
     }
     else if (command == "-allpairs"){
-
+        for (auto&[key, value] : requisiteMap){
+            for (auto&[key2, value2] : requisiteMap){
+                if (graph.canBeTakenConcurrently(key, key2)){
+                    std::cout << key << " and " << key2 << " can be taken concurrently." << std::endl;
+                }
+                else {
+                    std::cout << key << " and " << key2 << " cannot be taken concurrently." << std::endl;
+                }
+            }
+        }
     }
     else if (command == "-chains"){
         std::vector<std::vector<std::string>> prereqs;

@@ -3,7 +3,7 @@ project(CanBeTakenTogether)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(parser.x main_phase2.cpp
+add_executable(prerequisite.x main_phase2.cpp
         Parser/Token.cpp
         Parser/Token.hpp
         Parser/Tokenizer.cpp
