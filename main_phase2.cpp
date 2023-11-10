@@ -64,11 +64,13 @@ int main(int argc, char *argv[]) {
     else if (command == "-allpairs"){
         for (auto&[key, value] : requisiteMap){
             for (auto&[key2, value2] : requisiteMap){
-                if (graph.canBeTakenConcurrently(key, key2)){
-                    std::cout << key << " and " << key2 << " can be taken concurrently." << std::endl;
-                }
-                else {
-                    std::cout << key << " and " << key2 << " cannot be taken concurrently." << std::endl;
+                if (key != key2){
+                    if (graph.canBeTakenConcurrently(key, key2)){
+                        std::cout << key << " and " << key2 << " can be taken concurrently." << std::endl;
+                    }
+                    else {
+                        std::cout << key << " and " << key2 << " cannot be taken concurrently." << std::endl;
+                    }
                 }
             }
         }
