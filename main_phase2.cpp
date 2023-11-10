@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 
     // Run the given command
     std::string command = argv[1];
-    if (command == "-cyclic"){
+    if (command == "-cyclic" && argc == 4){
         std::cout << "The graph induced by " << argv[argc - 1];
         if (!graph.isCyclic()){
             std::cout << " does not";
@@ -41,14 +41,14 @@ int main(int argc, char *argv[]) {
     else if (command == "-print"){
         graph.printGraph();
     }
-    else if (command == "-includes"){
+    else if (command == "-includes" && argc == 4){
         if (graph.isALabel(argv[2])){
             std::cout << argv[argc - 1] << " includes " << argv[2] << "." << std::endl;
             return 0;
         }
         std::cout << argv[argc - 1] << " does not include " << argv[2] << "." << std::endl;
     }
-    else if (command == "-together"){
+    else if (command == "-together" && argc == 5){
         if (graph.canBeTakenConcurrently(argv[2], argv[3])){
             std::cout << argv[2] << " and " << argv[3] << " can be taken concurrently." << std::endl;
             return 0;
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
             }
         }
     }
-    else if (command == "-chains"){
+    else if (command == "-chains" && argc == 4){
         std::vector<std::vector<std::string>> prereqs;
         graph.prerequisiteChainsFor(argv[2], prereqs);
         for (std::vector<std::string>& i : prereqs){
@@ -82,16 +82,16 @@ int main(int argc, char *argv[]) {
             std::cout << std::endl;
         }
     }
-    else if (command == "-length"){
+    else if (command == "-length" && argc == 4){
         std::cout << "The length of the longest prerequisite chain of " << argv[2]
                   << " is " << graph.longestChain(argv[2]) << "." << std::endl;
     }
     else if (command == "-longest"){
         std::cout << "The length of the longest chain in " << argv[argc - 1] << " is " << graph.longestChain() << "." << std::endl;
     }
-    else if (command == "-indegree"){
+    else if (command == "-indegree" && argc == 4){
         int counter = graph.degreeOfDependency(argv[2]);
-        std::cout << "The number of courses that directly require" << argv[2]
+        std::cout << "The number of courses that directly require " << argv[2]
                   << " as a prerequisite is " << counter << "." << std::endl;
     }
     else {
