@@ -30,7 +30,7 @@ void Graph::printGraph() {
         int iter = 0;
         for (auto & i : value->prereqNodes()){
             std::cout << i->courseID();
-            if (iter != value->prereqNodes().size() - 1){std::cout << ", ";} // If not last element, print comma
+            if (iter != static_cast<int>(value->prereqNodes().size()) - 1){std::cout << ", ";} // If not last element, print comma
             iter++;
         }
         std::cout << std::endl;
@@ -150,7 +150,7 @@ int Graph::longestChain() {
         std::vector<std::vector<std::string>> prereqs;
         prerequisiteChainsFor(key, prereqs);
         for (auto & i : prereqs){
-            if (i.size() > longest){
+            if (static_cast<int>(i.size()) > longest){
                 longest = i.size();
             }
         }
@@ -163,7 +163,7 @@ int Graph::longestChain(std::string courseID) {
     prerequisiteChainsFor(courseID, prereqs);
     int longest = 0;
     for (auto & i : prereqs){
-        if (i.size() > longest){
+        if (static_cast<int>(i.size()) > longest){
             longest = static_cast<int>(i.size());
         }
     }
