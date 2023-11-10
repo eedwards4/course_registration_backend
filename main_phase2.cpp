@@ -10,6 +10,7 @@
 #include "Graph.h"
 
 void verifyReadableInputFile(char* jsonFileName);
+bool sanityCheck(std::string obj, Graph graph); // Searches for an object
 
 int main(int argc, char *argv[]) {
     // Make sure that the executable was given exactly 2 command-line argument
@@ -31,7 +32,7 @@ int main(int argc, char *argv[]) {
 
     // Run the given command
     std::string command = argv[1];
-    if (command == "-cyclic" && argc == 4){
+    if (command == "-cyclic"){
         std::cout << "The graph induced by " << argv[argc - 1];
         if (!graph.isCyclic()){
             std::cout << " does not";
@@ -49,6 +50,9 @@ int main(int argc, char *argv[]) {
         std::cout << argv[argc - 1] << " does not include " << argv[2] << "." << std::endl;
     }
     else if (command == "-together" && argc == 5){
+        sanityCheck(argv[2], graph);
+        sanityCheck(argv[3], graph);
+
         if (graph.canBeTakenConcurrently(argv[2], argv[3])){
             std::cout << argv[2] << " and " << argv[3] << " can be taken concurrently." << std::endl;
             return 0;
@@ -70,6 +74,7 @@ int main(int argc, char *argv[]) {
         }
     }
     else if (command == "-chains" && argc == 4){
+        sanityCheck(argv[2], graph);
         std::vector<std::vector<std::string>> prereqs;
         graph.prerequisiteChainsFor(argv[2], prereqs);
         for (std::vector<std::string>& i : prereqs){
@@ -83,6 +88,7 @@ int main(int argc, char *argv[]) {
         }
     }
     else if (command == "-length" && argc == 4){
+        sanityCheck(argv[2], graph);
         std::cout << "The length of the longest prerequisite chain of " << argv[2]
                   << " is " << graph.longestChain(argv[2]) << "." << std::endl;
     }
@@ -90,6 +96,7 @@ int main(int argc, char *argv[]) {
         std::cout << "The length of the longest chain in " << argv[argc - 1] << " is " << graph.longestChain() << "." << std::endl;
     }
     else if (command == "-indegree" && argc == 4){
+        sanityCheck(argv[2], graph);
         int counter = graph.degreeOfDependency(argv[2]);
         std::cout << "The number of courses that directly require " << argv[2]
                   << " as a prerequisite is " << counter << "." << std::endl;
@@ -123,4 +130,12 @@ void verifyReadableInputFile(char* jsonFileName) {
         exit(E_BAD_INPUT_FILE);
     }
     inputStream.close(); // close file! Parser will reopen it later.
+}
+
+bool sanityCheck(std::string obj, Graph graph){
+    if (graph.isALabel(obj)) {
+        return true;
+    }
+    std::cout << "Object: " << obj << " does not exist in the graph." << std::endl;
+    exit(E_WRONG_NUMBER_ARGS);
 }
