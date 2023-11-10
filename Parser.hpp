@@ -21,7 +21,7 @@
 #include <iostream>
 
 #include "Tokenizer.hpp"
-#include "../constants.hpp"
+#include "constants.hpp"
 
 class Parser {
 public:

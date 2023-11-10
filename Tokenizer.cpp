@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include "Tokenizer.hpp"
-#include "../constants.hpp"
+#include "constants.hpp"
 
 Tokenizer::Tokenizer(std::string inputFileName) {
     inputStream.open(inputFileName, std::ios::in);

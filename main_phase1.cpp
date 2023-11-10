@@ -18,11 +18,11 @@
 #include <iostream>
 #include <fstream>
 #include "constants.hpp"
-#include "Parser/Parser.hpp"
+#include "Parser.hpp"
 
 // Token and Tokenizer: only needed for testTokenizer
-#include "Parser/Token.hpp"
-#include "Parser/Tokenizer.hpp"
+#include "Token.hpp"
+#include "Tokenizer.hpp"
 
 const bool PRINT_TOKENS = false;  // set this to true to debug tokenizer
 const bool PRINT_PARSER_MAP = true; // set this to true to test your parser

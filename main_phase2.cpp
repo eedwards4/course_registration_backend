@@ -6,8 +6,8 @@
 #include <fstream>
 
 #include "constants.hpp"
-#include "Parser/Parser.hpp"
-#include "Graph/Graph.h"
+#include "Parser.hpp"
+#include "Graph.h"
 
 void verifyReadableInputFile(char* jsonFileName);
 
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
             int iter = 0;
             for (int j = static_cast<int>(i.size()) - 1; j > -1; j--){ // Iterate in reverse to get the correct order
                 std::cout << i[j];
-                if (iter != i.size() - 1){std::cout << ", ";} // If not last element, print comma
+                if (iter != static_cast<int>(i.size()) - 1){std::cout << ", ";} // If not last element, print comma
                 iter++;
             }
             std::cout << std::endl;
