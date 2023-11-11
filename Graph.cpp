@@ -151,7 +151,7 @@ int Graph::longestChain() {
         prerequisiteChainsFor(key, prereqs);
         for (auto & i : prereqs){
             if (static_cast<int>(i.size()) > longest){
-                longest = i.size();
+                longest = static_cast<int>(i.size());
             }
         }
     }
